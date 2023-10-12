@@ -1,9 +1,9 @@
 [package]
-name = "RayBNN_Raytrace"
-version = "0.1.4"
+name = "RayBNN_Cell"
+version = "0.1.0"
 authors = ["Brosnan Yuen <brosnanyuen@gmail.com>"]
 edition = "2021"
-description = "Ray tracing library using GPUs, CPUs, and FPGAs via CUDA, OpenCL, and oneAPI"
+description = "Cell Position Generator for RayBNN"
 readme = "README.md"
 repository = "https://github.com/BrosnanYuen/RayBNN_Raytrace"
 keywords = ["raytracer","raytracing","ray-tracing","CUDA","OpenCL"]
@@ -50,7 +50,7 @@ RayBNN_Sparse = "0.1.2"
 
 
 [lib]
-name = "RayBNN_Raytrace"
+name = "RayBNN_Cell"
 path = "src/lib.rs"
 
 
