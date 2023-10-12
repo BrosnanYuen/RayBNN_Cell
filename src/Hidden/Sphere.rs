@@ -10,6 +10,7 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 	, pivot: &Vec<f64>)
 	-> arrayfire::Array<u32>
 {
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 
 	let pivot_pos = pivot.clone();
 	let space_dims = pivot_pos.len();
@@ -17,6 +18,10 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 
 	let mut negative_range = pivot_pos[0].clone();
 	let mut positive_range = negative_range + cube_size;
+
+	let negative_range = arrayfire::constant::<f64>(pivot_pos[0].clone(),single_dims).cast::<Z>();
+	let positive_range = arrayfire::constant::<f64>(pivot_pos[0].clone() + cube_size,single_dims).cast::<Z>();
+
 
 	let mut axis = arrayfire::col(pos,0);
 
