@@ -5,9 +5,9 @@ use arrayfire;
 
 
 
-pub fn set_diag(
-	magsq_matrix: &mut arrayfire::Array<f64>,
-	val: f64
+pub fn set_diag<Z: arrayfire::FloatingPoint>(
+	magsq_matrix: &mut arrayfire::Array<Z>,
+	val: Z
 )
 {
 	let pos_num = magsq_matrix.dims()[0];
