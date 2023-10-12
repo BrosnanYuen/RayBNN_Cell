@@ -4,8 +4,8 @@ use arrayfire;
 
 
 
-pub fn get_inside_idx_cubeV2(
-	pos: &arrayfire::Array<f64>
+pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
+	pos: &arrayfire::Array<Z>
 	, cube_size: f64
 	, pivot: &Vec<f64>)
 	-> arrayfire::Array<u32>
