@@ -16,11 +16,11 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 	let space_dims = pivot_pos.len();
 
 
-	let mut negative_range = pivot_pos[0].clone();
-	let mut positive_range = negative_range + cube_size;
+	//let mut negative_range = pivot_pos[0].clone();
+	//let mut positive_range = negative_range + cube_size;
 
-	let negative_range = arrayfire::constant::<f64>(pivot_pos[0].clone(),single_dims).cast::<Z>();
-	let positive_range = arrayfire::constant::<f64>(pivot_pos[0].clone() + cube_size,single_dims).cast::<Z>();
+	let mut negative_range = arrayfire::constant::<f64>(pivot_pos[0].clone(),single_dims).cast::<Z>();
+	let mut positive_range = arrayfire::constant::<f64>(pivot_pos[0].clone() + cube_size,single_dims).cast::<Z>();
 
 
 	let mut axis = arrayfire::col(pos,0);
@@ -31,8 +31,14 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 
 	for idx in 1..space_dims
 	{
-		negative_range = pivot_pos[idx].clone();
-		positive_range = negative_range + cube_size;
+		//negative_range = pivot_pos[idx].clone();
+		//positive_range = negative_range + cube_size;
+
+
+		negative_range = arrayfire::constant::<f64>(pivot_pos[idx].clone(),single_dims).cast::<Z>();
+		positive_range = arrayfire::constant::<f64>(pivot_pos[idx].clone() + cube_size,single_dims).cast::<Z>();
+	
+
 	
 		axis = arrayfire::col(pos,idx as i64);
 
