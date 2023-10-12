@@ -5,7 +5,7 @@ use arrayfire;
 
 
 
-pub fn set_diag<Z: arrayfire::FloatingPoint>(
+pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType = Z>>(
 	magsq_matrix: &mut arrayfire::Array<Z>,
 	val: Z
 )
@@ -21,7 +21,7 @@ pub fn set_diag<Z: arrayfire::FloatingPoint>(
 	*magsq_matrix  = arrayfire::flat(magsq_matrix);
 
 
-	let large_vec = arrayfire::constant::<f64>(val, arrayfire::Dim4::new(&[pos_num,1,1,1]));
+	let large_vec = arrayfire::constant(val, arrayfire::Dim4::new(&[pos_num,1,1,1]));
 
 	let mut idxrs = arrayfire::Indexer::default();
 	idxrs.set_index(&idx, 0, None);
