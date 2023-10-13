@@ -7,7 +7,7 @@ const TWO_F64: f64 = 2.0;
 
 pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType = Z>>(
 	magsq_matrix: &mut arrayfire::Array<Z>,
-	val: Z
+	val: &arrayfire::Array<Z>,
 )
 {
 	let pos_num = magsq_matrix.dims()[0];
@@ -21,7 +21,9 @@ pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType 
 	*magsq_matrix  = arrayfire::flat(magsq_matrix);
 
 
-	let large_vec = arrayfire::constant(val, arrayfire::Dim4::new(&[pos_num,1,1,1]));
+	//let large_vec = arrayfire::constant(val, arrayfire::Dim4::new(&[pos_num,1,1,1]));
+	let large_vec = arrayfire::tile(val, arrayfire::Dim4::new(&[pos_num,1,1,1]));
+
 
 	let mut idxrs = arrayfire::Indexer::default();
 	idxrs.set_index(&idx, 0, None);
