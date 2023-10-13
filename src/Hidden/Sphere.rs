@@ -6,7 +6,7 @@ const TWO_F64: f64 = 2.0;
 
 const NEURON_RAD_FACTOR: f64 = 1.1;
 
-const HIGH_F64: f64 = f32::MAX as f64;
+const HIGH_F64: f64 = f64::INFINITY;
 
 
 
