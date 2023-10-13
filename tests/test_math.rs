@@ -58,12 +58,12 @@ fn test_math() {
 
 
 
-
-
+    let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+    let val = arrayfire::constant(1000000.0, single_dims);
 
     RayBNN_Cell::Util::Math::set_diag(
     	&mut magsq,
-        1000000.0
+        &val
     );
 
 
