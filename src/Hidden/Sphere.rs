@@ -185,11 +185,18 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 	let pos_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
 
+
+
+	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
+
+
+
+
 	let mut r = arrayfire::randu::<f64>(generate_dims);
 	r = (sphere_rad-neuron_rad)*arrayfire::cbrt(&r);
-	let mut theta = two*(arrayfire::randu::<f64>(generate_dims)-onehalf);
+	let mut theta = TWO*(arrayfire::randu::<f64>(generate_dims)-onehalf);
 	theta = arrayfire::acos(&theta);
-	let mut phi = two*std::f64::consts::PI*arrayfire::randu::<f64>(generate_dims);
+	let mut phi = TWO*std::f64::consts::PI*arrayfire::randu::<f64>(generate_dims);
 	
 
 
