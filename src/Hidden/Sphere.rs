@@ -91,11 +91,11 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 
 	let neuron_sq: f64 = 4.0*neuron_rad*neuron_rad*NEURON_RAD_FACTOR;
 
-	let neuron_sq = arrayfire::constant::<f64>(neuron_sq,single_dims).cast::<Z>();
+	let neuron_sq_Z = arrayfire::constant::<f64>(neuron_sq,single_dims).cast::<Z>();
 
 
 	//Select close objects
-	let mut cmp = arrayfire::lt(&magsq , &neuron_sq, false);
+	let mut cmp = arrayfire::lt(&magsq , &neuron_sq_Z, false);
 	drop(magsq);
 		
 
