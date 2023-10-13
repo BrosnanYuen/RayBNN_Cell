@@ -111,3 +111,190 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+Generates a sphere and detects cell collisions in minibatch. Where groups/minibatches of cells are checked
+
+Inputs
+netdata:  The sphere radius, neuron radius, mumber of neurons and glial cells to be created
+
+Outputs:
+glia_pos:    The 3D position of glial cells in the shape of a 3D sphere
+neuron_pos:  The 3D position of neurons in the shape of a 3D sphere
+
+
+*/
+
+pub fn sphere_cell_collision_minibatch(
+	netdata: &network_metadata_type,
+	glia_pos: &mut arrayfire::Array<f64>,
+	neuron_pos: &mut arrayfire::Array<f64>)
+	{
+
+	let neuron_size: u64 = netdata.neuron_size.clone();
+	let input_size: u64 = netdata.input_size.clone();
+	let output_size: u64 = netdata.output_size.clone();
+	let proc_num: u64 = netdata.proc_num.clone();
+	let active_size: u64 = netdata.active_size.clone();
+	let space_dims: u64 = netdata.space_dims.clone();
+
+	let del_unused_neuron: bool = netdata.del_unused_neuron.clone();
+
+
+	let nratio: f64 = netdata.nratio.clone();
+	let neuron_std: f64 = netdata.neuron_std.clone();
+	let sphere_rad: f64 = netdata.sphere_rad.clone();
+	let neuron_rad: f64 = netdata.neuron_rad.clone();
+	let con_rad: f64 = netdata.con_rad.clone();
+	let center_const: f64 = netdata.center_const.clone();
+	let spring_const: f64 = netdata.spring_const.clone();
+	let repel_const: f64 = netdata.repel_const.clone();
+
+
+	let generate_dims = arrayfire::Dim4::new(&[2*active_size,1,1,1]);
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+	let pos_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
+
+	let mut r = arrayfire::randu::<f64>(generate_dims);
+	r = (sphere_rad-neuron_rad)*arrayfire::cbrt(&r);
+	let mut theta = two*(arrayfire::randu::<f64>(generate_dims)-onehalf);
+	theta = arrayfire::acos(&theta);
+	let mut phi = two*std::f64::consts::PI*arrayfire::randu::<f64>(generate_dims);
+	
+
+
+	let x = r.clone()*arrayfire::sin(&theta)*arrayfire::cos(&phi);
+	let y = r.clone()*arrayfire::sin(&theta)*arrayfire::sin(&phi);
+	let z = r.clone()*arrayfire::cos(&theta);
+
+	drop(r);
+	drop(theta);
+	drop(phi);
+
+	let mut total_obj2 = arrayfire::join_many(1, vec![&x,&y,&z]);
+	drop(x);
+	drop(y);
+	drop(z);
+
+
+	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
+	pivot_rad = (pivot_rad/((2*active_size) as f64)).cbrt();
+
+	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*neuron_rad_factor);
+
+	let mut loop_end_flag = false;
+	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
+
+
+	let single_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
+
+
+	let select_idx_dims = arrayfire::Dim4::new(&[total_obj2.dims()[0],1,1,1]);
+	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
+
+	loop 
+	{
+
+		let idx = get_inside_idx_cubeV2(
+			&total_obj2
+			, pivot_rad2
+			, &pivot_pos
+		);
+
+		
+		if idx.dims()[0] > 1
+		{
+			let tmp_obj = arrayfire::lookup(&total_obj2, &idx, 0);
+
+			let mut neg_idx = select_non_overlap(
+				&tmp_obj,
+				neuron_rad
+			);
+	
+
+			if neg_idx.dims()[0] > 0
+			{
+				neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
+
+				let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
+
+				let mut idxrs = arrayfire::Indexer::default();
+				idxrs.set_index(&neg_idx, 0, None);
+				arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
+			}
+
+			
+		}
+		drop(idx);
+
+
+		pivot_pos[0] = pivot_pos[0] + pivot_rad;
+
+		for idx in 0..space_dims
+		{
+			if pivot_pos[idx as usize] > sphere_rad
+			{
+				if idx == (space_dims-1)
+				{
+					loop_end_flag = true;
+					break;
+				}
+
+				pivot_pos[idx as usize] = -sphere_rad;
+				pivot_pos[(idx+1) as usize] = pivot_pos[(idx+1) as usize] + pivot_rad;
+			}
+		}
+
+		if loop_end_flag
+		{
+			break;
+		}
+	}
+
+	let idx2 = arrayfire::locate(&select_idx);
+	drop(select_idx);
+
+	total_obj2 = arrayfire::lookup(&total_obj2, &idx2, 0);
+
+
+
+
+
+
+
+
+	let total_obj_size = total_obj2.dims()[0];
+
+	let split_idx = ((total_obj_size as f64)*nratio) as u64;
+
+	*neuron_pos = arrayfire::rows(&total_obj2, 0, (split_idx-1)  as i64);
+	
+	*glia_pos = arrayfire::rows(&total_obj2, split_idx  as i64, (total_obj_size-1)  as i64);
+
+
+
+}
+
+
+
+
+
+
+
+
