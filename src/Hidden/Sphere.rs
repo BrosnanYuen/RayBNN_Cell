@@ -181,17 +181,6 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
 
 
 
-
-	let nratio: f64 = netdata.nratio.clone();
-	let neuron_std: f64 = netdata.neuron_std.clone();
-	let sphere_rad: f64 = netdata.sphere_rad.clone();
-	let neuron_rad: f64 = netdata.neuron_rad.clone();
-	let con_rad: f64 = netdata.con_rad.clone();
-	let center_const: f64 = netdata.center_const.clone();
-	let spring_const: f64 = netdata.spring_const.clone();
-	let repel_const: f64 = netdata.repel_const.clone();
-
-
 	let generate_dims = arrayfire::Dim4::new(&[2*active_size,1,1,1]);
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 	let pos_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
