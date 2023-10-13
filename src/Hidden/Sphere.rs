@@ -144,13 +144,13 @@ neuron_pos:  The 3D position of neurons in the shape of a 3D sphere
 
 */
 
-pub fn sphere_cell_collision_minibatch(
+pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>,
 
 
-	glia_pos: &mut arrayfire::Array<f64>,
-	neuron_pos: &mut arrayfire::Array<f64>)
+	glia_pos: &mut arrayfire::Array<Z>,
+	neuron_pos: &mut arrayfire::Array<Z>)
 	{
 
 	let neuron_size: u64 = netdata.neuron_size.clone();
