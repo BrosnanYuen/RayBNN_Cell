@@ -36,16 +36,12 @@ pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType 
 
 
 
-pub fn matrix_dist(
-	pos_vec: &arrayfire::Array<f64>,
-	dist_matrix: &mut arrayfire::Array<f64>,
-	magsq_matrix: &mut arrayfire::Array<f64>
+pub fn matrix_dist<Z: arrayfire::FloatingPoint >(
+	pos_vec: &arrayfire::Array<Z>,
+	dist_matrix: &mut arrayfire::Array<Z>,
+	magsq_matrix: &mut arrayfire::Array<Z>
 )
 {
-
-
-
-
 
 
 	let mut p1 = pos_vec.clone();
