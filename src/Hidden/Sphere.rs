@@ -1,5 +1,8 @@
 use arrayfire;
 
+use std::collections::HashMap;
+
+
 use crate::Util::Math::set_diag;
 
 const TWO_F64: f64 = 2.0;
@@ -142,7 +145,10 @@ neuron_pos:  The 3D position of neurons in the shape of a 3D sphere
 */
 
 pub fn sphere_cell_collision_minibatch(
-	netdata: &network_metadata_type,
+    modeldata_float: &HashMap<String, f64>,
+    modeldata_int: &HashMap<String, u64>,
+
+
 	glia_pos: &mut arrayfire::Array<f64>,
 	neuron_pos: &mut arrayfire::Array<f64>)
 	{
