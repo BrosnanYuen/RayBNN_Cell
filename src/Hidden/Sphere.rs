@@ -57,7 +57,7 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 
 
 
-pub fn select_non_overlap<Z: arrayfire::FloatingPoint>(
+pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 	pos: &arrayfire::Array<Z>,
 	neuron_rad: f64
 ) -> arrayfire::Array<u32>
@@ -75,7 +75,7 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint>(
 
 	let mut magsq = arrayfire::sub(&p1, pos, true);
 	drop(p1);
-	magsq = arrayfire::pow(&magsq,&two,false);
+	magsq = arrayfire::pow(&magsq,&TWO,false);
 
 	magsq = arrayfire::sum(&magsq,1);
 
