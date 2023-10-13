@@ -1,7 +1,7 @@
 use arrayfire;
 
 
-
+const TWO_F64: f64 = 2.0;
 
 
 
@@ -36,12 +36,15 @@ pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType 
 
 
 
-pub fn matrix_dist<Z: arrayfire::FloatingPoint >(
+pub fn matrix_dist<Z: arrayfire::FloatingPoint<AggregateOutType = Z> >(
 	pos_vec: &arrayfire::Array<Z>,
 	dist_matrix: &mut arrayfire::Array<Z>,
 	magsq_matrix: &mut arrayfire::Array<Z>
 )
 {
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
+
 
 
 	let mut p1 = pos_vec.clone();
@@ -57,7 +60,7 @@ pub fn matrix_dist<Z: arrayfire::FloatingPoint >(
 
 
 
-	*magsq_matrix = arrayfire::pow(dist_matrix,&two,false);
+	*magsq_matrix = arrayfire::pow(dist_matrix,&TWO,false);
 
 	*magsq_matrix = arrayfire::sum(magsq_matrix,1);
 }
