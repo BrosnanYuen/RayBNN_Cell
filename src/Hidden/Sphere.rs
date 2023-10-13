@@ -6,6 +6,9 @@ const TWO_F64: f64 = 2.0;
 
 const NEURON_RAD_FACTOR: f64 = 1.1;
 
+const HIGH_F64: f64 = f32::MAX as f64;
+
+
 
 
 pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
@@ -70,6 +73,7 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
 
+	let HIGH = arrayfire::constant::<f64>(HIGH_F64,single_dims).cast::<Z>();
 
 
 
@@ -86,7 +90,7 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 
 	set_diag(
 		&mut magsq,
-		high
+		&HIGH
 	);
 
 	let neuron_sq: f64 = 4.0*neuron_rad*neuron_rad*NEURON_RAD_FACTOR;

@@ -5,7 +5,7 @@ const TWO_F64: f64 = 2.0;
 
 
 
-pub fn set_diag<Z: arrayfire::FloatingPoint + arrayfire::ConstGenerator<OutType = Z>>(
+pub fn set_diag<Z: arrayfire::FloatingPoint >(
 	magsq_matrix: &mut arrayfire::Array<Z>,
 	val: &arrayfire::Array<Z>,
 )
