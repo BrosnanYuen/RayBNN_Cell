@@ -4,6 +4,10 @@ use crate::Util::Math::set_diag;
 
 const TWO_F64: f64 = 2.0;
 
+const NEURON_RAD_FACTOR: f64 = 1.1;
+
+
+
 pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 	pos: &arrayfire::Array<Z>
 	, cube_size: f64
@@ -85,7 +89,10 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 		high
 	);
 
-	let neuron_sq: f64 = 4.0*neuron_rad*neuron_rad*neuron_rad_factor;
+	let neuron_sq: f64 = 4.0*neuron_rad*neuron_rad*NEURON_RAD_FACTOR;
+
+	let neuron_sq = arrayfire::constant::<f64>(neuron_sq,single_dims).cast::<Z>();
+
 
 	//Select close objects
 	let mut cmp = arrayfire::lt(&magsq , &neuron_sq, false);
