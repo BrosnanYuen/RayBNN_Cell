@@ -2,7 +2,7 @@ use arrayfire;
 
 use crate::Util::Math::set_diag;
 
-
+const TWO_F64: f64 = 2.0;
 
 pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 	pos: &arrayfire::Array<Z>
@@ -57,11 +57,17 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 
 
 
-pub fn select_non_overlap(
-	pos: &arrayfire::Array<f64>,
+pub fn select_non_overlap<Z: arrayfire::FloatingPoint>(
+	pos: &arrayfire::Array<Z>,
 	neuron_rad: f64
 ) -> arrayfire::Array<u32>
 {
+
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
+
+
+
 
 	let mut p1 = pos.clone();
 
