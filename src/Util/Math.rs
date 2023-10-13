@@ -42,14 +42,6 @@ pub fn matrix_dist(
 	magsq_matrix: &mut arrayfire::Array<f64>
 )
 {
-	//let pos_num = pos_vec.dims()[0];
-	//let space_dims = pos_vec.dims()[1];
-
-
-
-	//let mut p0 = pos_vec.clone();
-
-	//p0 = arrayfire::tile(&p0, arrayfire::Dim4::new(&[1,1,pos_num,1]));
 
 
 
@@ -57,24 +49,14 @@ pub fn matrix_dist(
 
 
 	let mut p1 = pos_vec.clone();
-	/*
-	p1 = arrayfire::transpose(&p1, false);
 
-	p1 = arrayfire::moddims(&p1,arrayfire::Dim4::new(&[1,space_dims,pos_num,1]));
-
-	p1 = arrayfire::tile(&p1, arrayfire::Dim4::new(&[pos_num,1,1,1]));
-	*/
 
 	p1 = arrayfire::reorder_v2(&p1, 2, 1, Some(vec![0]));
-
-	//p1 = arrayfire::tile(&p1, arrayfire::Dim4::new(&[pos_num,1,1,1]));
 
 
 
 	
 
-
-	//*dist_matrix = p1 - p0;
 	*dist_matrix = arrayfire::sub(&p1, pos_vec, true);
 
 
