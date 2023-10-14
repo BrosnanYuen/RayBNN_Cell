@@ -2,7 +2,7 @@
 #![allow(non_snake_case)]
 
 use arrayfire;
-
+use std::collections::HashMap;
 
 const BACK_END: arrayfire::Backend = arrayfire::Backend::CUDA;
 const DEVICE: i32 = 0;
@@ -35,6 +35,10 @@ fn test_sphere_cell_collision_minibatch() {
     let nratio =  0.5;
     let neuron_std =  0.3;
     let sphere_rad =  30.0;
+
+
+    let modeldata_float: HashMap<String, f64> = HashMap::new();
+    let modeldata_int: HashMap<String, u64>  = HashMap::new();
 
 
 

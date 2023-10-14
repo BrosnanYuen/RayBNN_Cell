@@ -181,8 +181,8 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 	let neuron_std: f64 = modeldata_float["neuron_std"].clone();
 	let sphere_rad: f64 = modeldata_float["sphere_rad"].clone();
 	let neuron_rad: f64 = modeldata_float["neuron_rad"].clone();
-	let con_rad: f64 = modeldata_float["con_rad"].clone();
-	let init_prob: f64 = modeldata_float["init_prob"].clone();
+	//let con_rad: f64 = modeldata_float["con_rad"].clone();
+	//let init_prob: f64 = modeldata_float["init_prob"].clone();
 
 
 
