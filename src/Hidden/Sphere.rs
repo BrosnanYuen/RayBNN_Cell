@@ -329,13 +329,13 @@ pub fn split_into_glia_neuron<Z: arrayfire::FloatingPoint >(
 
 
 
-	let total_obj_size = total_obj2.dims()[0];
+	let total_obj_size = cell_pos.dims()[0];
 
 	let split_idx = ((total_obj_size as f64)*nratio) as u64;
 
-	*neuron_pos = arrayfire::rows(&total_obj2, 0, (split_idx-1)  as i64);
+	*neuron_pos = arrayfire::rows(&cell_pos, 0, (split_idx-1)  as i64);
 	
-	*glia_pos = arrayfire::rows(&total_obj2, split_idx  as i64, (total_obj_size-1)  as i64);
+	*glia_pos = arrayfire::rows(&cell_pos, split_idx  as i64, (total_obj_size-1)  as i64);
 
 }
 
