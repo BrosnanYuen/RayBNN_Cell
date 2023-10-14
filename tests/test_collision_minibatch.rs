@@ -3,6 +3,9 @@
 
 use arrayfire;
 use std::collections::HashMap;
+use std::time::{Duration, Instant};
+
+
 
 const BACK_END: arrayfire::Backend = arrayfire::Backend::CUDA;
 const DEVICE: i32 = 0;
@@ -68,11 +71,14 @@ fn test_sphere_cell_collision_minibatch() {
 
     let start = Instant::now();
 
-	clusterdiffeq::physics::initial_f32::spherical_structV3(
-		&netdata,
-		&mut glia_pos,
-		&mut neuron_pos
-	);
+
+    RayBNN_Cell::Hidden::Sphere::sphere_cell_collision_minibatch(
+        &modeldata_float, 
+        &modeldata_int, 
+
+        &mut glia_pos, 
+        &mut neuron_pos
+    );
 
 	let duration = start.elapsed();
 
