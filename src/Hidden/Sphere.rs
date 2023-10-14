@@ -231,13 +231,6 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 
 
 
-
-
-
-
-	let mut total_obj2 = generate_uniform_sphere_posiiton(modeldata_float, modeldata_int);
-
-
 	
 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
@@ -251,14 +244,14 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 
 
 
-	let select_idx_dims = arrayfire::Dim4::new(&[total_obj2.dims()[0],1,1,1]);
+	let select_idx_dims = arrayfire::Dim4::new(&[cell_pos.dims()[0],1,1,1]);
 	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
 
 	loop 
 	{
 
 		let idx = get_inside_idx_cubeV2(
-			&total_obj2
+			&cell_pos
 			, pivot_rad2
 			, &pivot_pos
 		);
@@ -266,7 +259,7 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 		
 		if idx.dims()[0] > 1
 		{
-			let tmp_obj = arrayfire::lookup(&total_obj2, &idx, 0);
+			let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
 
 			let mut neg_idx = select_non_overlap(
 				&tmp_obj,
