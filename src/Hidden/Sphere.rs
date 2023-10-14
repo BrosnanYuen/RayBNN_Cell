@@ -203,12 +203,117 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>,
 
-
-	cell_pos: &mut arrayfire::Array<Z>)
+	cell_pos: &arrayfire::Array<Z>) -> arrayfire::Array<u32>
 	{
 
 
 
+
+
+	let neuron_size: u64 = modeldata_int["neuron_size"].clone();
+	let input_size: u64 = modeldata_int["input_size"].clone();
+	let output_size: u64 = modeldata_int["output_size"].clone();
+	let proc_num: u64 = modeldata_int["proc_num"].clone();
+	let active_size: u64 = modeldata_int["active_size"].clone();
+	let space_dims: u64 = modeldata_int["space_dims"].clone();
+
+
+
+
+
+
+
+
+
+	let nratio: f64 = modeldata_float["nratio"].clone();
+	let neuron_std: f64 = modeldata_float["neuron_std"].clone();
+	let sphere_rad: f64 = modeldata_float["sphere_rad"].clone();
+	let neuron_rad: f64 = modeldata_float["neuron_rad"].clone();
+	//let con_rad: f64 = modeldata_float["con_rad"].clone();
+	//let init_prob: f64 = modeldata_float["init_prob"].clone();
+
+
+
+
+
+
+
+	let mut total_obj2 = generate_uniform_sphere_posiiton(modeldata_float, modeldata_int);
+
+
+	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
+	pivot_rad = (pivot_rad/((2*active_size) as f64)).cbrt();
+
+	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*NEURON_RAD_FACTOR);
+
+	let mut loop_end_flag = false;
+	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
+
+
+
+
+	let select_idx_dims = arrayfire::Dim4::new(&[total_obj2.dims()[0],1,1,1]);
+	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
+
+	loop 
+	{
+
+		let idx = get_inside_idx_cubeV2(
+			&total_obj2
+			, pivot_rad2
+			, &pivot_pos
+		);
+
+		
+		if idx.dims()[0] > 1
+		{
+			let tmp_obj = arrayfire::lookup(&total_obj2, &idx, 0);
+
+			let mut neg_idx = select_non_overlap(
+				&tmp_obj,
+				neuron_rad
+			);
+	
+
+			if neg_idx.dims()[0] > 0
+			{
+				neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
+
+				let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
+
+				let mut idxrs = arrayfire::Indexer::default();
+				idxrs.set_index(&neg_idx, 0, None);
+				arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
+			}
+
+			
+		}
+		drop(idx);
+
+
+		pivot_pos[0] = pivot_pos[0] + pivot_rad;
+
+		for idx in 0..space_dims
+		{
+			if pivot_pos[idx as usize] > sphere_rad
+			{
+				if idx == (space_dims-1)
+				{
+					loop_end_flag = true;
+					break;
+				}
+
+				pivot_pos[idx as usize] = -sphere_rad;
+				pivot_pos[(idx+1) as usize] = pivot_pos[(idx+1) as usize] + pivot_rad;
+			}
+		}
+
+		if loop_end_flag
+		{
+			break;
+		}
+	}
+	
 
 
 }
