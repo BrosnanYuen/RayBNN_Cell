@@ -68,17 +68,24 @@ fn test_sphere_cell_collision_minibatch() {
 	let mut neuron_pos = arrayfire::constant::<f32>(0.0,temp_dims);
 
 
+    let mut cell_pos: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate_uniform_sphere_posiiton(&modeldata_float, &modeldata_int);
 
 
     let start = Instant::now();
 
-
+    /*
     RayBNN_Cell::Hidden::Sphere::sphere_cell_collision_minibatch(
         &modeldata_float, 
         &modeldata_int, 
 
         &mut glia_pos, 
         &mut neuron_pos
+    );
+    */
+    let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
+        &modeldata_float, 
+        &modeldata_int, 
+        &cell_pos
     );
 
 	let duration = start.elapsed();
