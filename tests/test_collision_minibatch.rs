@@ -71,20 +71,13 @@ fn test_sphere_cell_collision_minibatch() {
     let mut cell_pos: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate_uniform_sphere_posiiton(&modeldata_float, &modeldata_int);
 
 
+    println!("cell_pos {}", cell_pos.dims()[0]);
 
+    assert_eq!(cell_pos.dims()[0], active_size*2);
 
 
     let start = Instant::now();
 
-    /*
-    RayBNN_Cell::Hidden::Sphere::sphere_cell_collision_minibatch(
-        &modeldata_float, 
-        &modeldata_int, 
-
-        &mut glia_pos, 
-        &mut neuron_pos
-    );
-    */
     let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
         &modeldata_float, 
         &modeldata_int, 
