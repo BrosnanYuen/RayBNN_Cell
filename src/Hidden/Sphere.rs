@@ -13,6 +13,12 @@ const HIGH_F64: f64 = f64::INFINITY;
 
 const ONEHALF_F64: f64 = 0.5;
 
+const TARGET_DENSITY: f64 = 3500.0;
+
+
+
+
+
 
 pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 	pos: &arrayfire::Array<Z>
@@ -222,7 +228,7 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<UnaryOutType 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
 	pivot_rad = (pivot_rad/((2*active_size) as f64)).cbrt();
 
-	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*neuron_rad_factor);
+	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*NEURON_RAD_FACTOR);
 
 	let mut loop_end_flag = false;
 	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
