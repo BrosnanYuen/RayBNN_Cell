@@ -13,14 +13,15 @@ const DEVICE: i32 = 0;
 
 use rayon::prelude::*;
 
-
+const TWO_F64: f64 = 2.0;
 
 #[test]
 fn test_sphere_cell_collision_minibatch() {
     arrayfire::set_backend(BACK_END);
     arrayfire::set_device(DEVICE);
 
-
+    let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+    let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<f32>();
 
 
 	let neuron_size: u64 = 51000;
@@ -38,8 +39,8 @@ fn test_sphere_cell_collision_minibatch() {
     let sphere_rad =  30.0;
 
 
-    let modeldata_float: HashMap<String, f64> = HashMap::new();
-    let modeldata_int: HashMap<String, u64>  = HashMap::new();
+    let mut modeldata_float: HashMap<String, f64> = HashMap::new();
+    let mut modeldata_int: HashMap<String, u64>  = HashMap::new();
 
     modeldata_int.insert("neuron_size".to_string(), neuron_size.clone());
     modeldata_int.insert("input_size".to_string(), input_size.clone());
@@ -108,7 +109,7 @@ fn test_sphere_cell_collision_minibatch() {
 		let select_pos = arrayfire::row(&total_obj,i as i64);
 
 		let mut dist = arrayfire::sub(&select_pos,&total_obj, true);
-		let mut magsq = arrayfire::pow(&dist,&two,false);
+		let mut magsq = arrayfire::pow(&dist,&TWO,false);
 		let mut magsq = arrayfire::sum(&magsq,1);
 
 
@@ -119,7 +120,7 @@ fn test_sphere_cell_collision_minibatch() {
 		let (m0,_) = arrayfire::min_all::<f32>(&magsq);
 
 		//println!("{} dist {}",i, m0);
-		assert!(m0 > neuron_sq);
+		assert!((m0 as f64) > neuron_sq);
 	}
 
 
