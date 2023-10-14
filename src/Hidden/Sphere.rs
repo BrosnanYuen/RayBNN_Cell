@@ -209,7 +209,7 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 	let mut phi = TWO_PI*arrayfire::randu::<Z>(generate_dims);
 	
 
-	let r = r.cast::<Z>();
+	
 
 	let x = r.clone()*arrayfire::sin(&theta)*arrayfire::cos(&phi);
 	let y = r.clone()*arrayfire::sin(&theta)*arrayfire::sin(&phi);
