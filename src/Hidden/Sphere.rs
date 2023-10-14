@@ -11,7 +11,7 @@ const NEURON_RAD_FACTOR: f64 = 1.1;
 
 const HIGH_F64: f64 = f64::INFINITY;
 
-
+const ONEHALF_F64: f64 = 0.5;
 
 
 pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
@@ -189,12 +189,13 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
 
 	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
 
+	let ONEHALF = arrayfire::constant::<f64>(ONEHALF_F64,single_dims).cast::<Z>();
 
 
 
 	let mut r = arrayfire::randu::<f64>(generate_dims);
 	r = (sphere_rad-neuron_rad)*arrayfire::cbrt(&r);
-	let mut theta = TWO*(arrayfire::randu::<f64>(generate_dims)-onehalf);
+	let mut theta = TWO*(arrayfire::randu::<f64>(generate_dims)-ONEHALF);
 	theta = arrayfire::acos(&theta);
 	let mut phi = TWO*std::f64::consts::PI*arrayfire::randu::<f64>(generate_dims);
 	
