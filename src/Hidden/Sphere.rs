@@ -315,6 +315,29 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 
 
 
+pub fn split_into_glia_neuron<Z: arrayfire::FloatingPoint >(
+    modeldata_float: &HashMap<String, f64>,
+
+	cell_pos: &arrayfire::Array<Z>,
+
+	glia_pos: &mut arrayfire::Array<Z>,
+	neuron_pos: &mut arrayfire::Array<Z>)
+	{
+
+
+	let nratio: f64 = modeldata_float["nratio"].clone();
+
+
+
+	let total_obj_size = total_obj2.dims()[0];
+
+	let split_idx = ((total_obj_size as f64)*nratio) as u64;
+
+	*neuron_pos = arrayfire::rows(&total_obj2, 0, (split_idx-1)  as i64);
+	
+	*glia_pos = arrayfire::rows(&total_obj2, split_idx  as i64, (total_obj_size-1)  as i64);
+
+}
 
 
 
