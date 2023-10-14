@@ -239,7 +239,7 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
 
 
-	let single_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
+	//let single_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
 
 
 	let select_idx_dims = arrayfire::Dim4::new(&[total_obj2.dims()[0],1,1,1]);
