@@ -183,14 +183,7 @@ pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint >(
 	drop(theta);
 	drop(phi);
 
-	let mut total_obj2 = arrayfire::join_many(1, vec![&x,&y,&z]);
-	drop(x);
-	drop(y);
-	drop(z);
-
-
-
-
+	arrayfire::join_many(1, vec![&x,&y,&z])
 
 }
 
