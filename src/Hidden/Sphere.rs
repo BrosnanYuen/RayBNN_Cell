@@ -247,21 +247,6 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 
 
 
-	let generate_dims = arrayfire::Dim4::new(&[2*active_size,1,1,1]);
-	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
-	let pos_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
-
-
-
-	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
-
-	let ONEHALF = arrayfire::constant::<f64>(ONEHALF_F64,single_dims).cast::<Z>();
-
-	let TWO_PI = arrayfire::constant::<f64>(TWO_F64*std::f64::consts::PI,single_dims).cast::<Z>();
-
-
-
-	let sphere_rad_Z = arrayfire::constant::<f64>(sphere_rad-neuron_rad,single_dims).cast::<Z>();
 
 
 
@@ -277,7 +262,6 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
 
 
-	//let single_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
 
 
 	let select_idx_dims = arrayfire::Dim4::new(&[total_obj2.dims()[0],1,1,1]);
