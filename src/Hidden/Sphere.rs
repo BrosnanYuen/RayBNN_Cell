@@ -150,7 +150,7 @@ neuron_pos:  The 3D position of neurons in the shape of a 3D sphere
 
 */
 
-pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >(
+pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutType = Z, UnaryOutType = Z> >(
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>,
 
