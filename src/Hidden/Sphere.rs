@@ -144,7 +144,7 @@ neuron_pos:  The 3D position of neurons in the shape of a 3D sphere
 
 */
 
-pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
+pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >(
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>,
 
@@ -195,9 +195,9 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint>(
 
 	let mut r = arrayfire::randu::<f64>(generate_dims);
 	r = (sphere_rad-neuron_rad)*arrayfire::cbrt(&r);
-	let mut theta = TWO*(arrayfire::randu::<f64>(generate_dims)-ONEHALF);
+	let mut theta = TWO*(arrayfire::randu::<Z>(generate_dims)-ONEHALF);
 	theta = arrayfire::acos(&theta);
-	let mut phi = TWO*std::f64::consts::PI*arrayfire::randu::<f64>(generate_dims);
+	let mut phi = TWO*std::f64::consts::PI*arrayfire::randu::<Z>(generate_dims);
 	
 
 
