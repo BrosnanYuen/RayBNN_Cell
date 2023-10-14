@@ -203,11 +203,8 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>,
 
-	cell_pos: &arrayfire::Array<Z>) -> arrayfire::Array<u32>
+	cell_pos: &arrayfire::Array<Z>) -> arrayfire::Array<bool>
 	{
-
-
-
 
 
 	let neuron_size: u64 = modeldata_int["neuron_size"].clone();
@@ -240,6 +237,8 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 
 	let mut total_obj2 = generate_uniform_sphere_posiiton(modeldata_float, modeldata_int);
 
+
+	
 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
 	pivot_rad = (pivot_rad/((2*active_size) as f64)).cbrt();
@@ -315,7 +314,7 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 	}
 	
 
-
+	select_idx
 }
 
 
