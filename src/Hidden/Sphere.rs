@@ -166,6 +166,28 @@ pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint >(
 
 
 	
+	let mut r = arrayfire::randu::<Z>(generate_dims);
+	r = (sphere_rad_Z)*arrayfire::cbrt(&r).cast::<Z>();
+	let mut theta = TWO*(arrayfire::randu::<Z>(generate_dims)-ONEHALF);
+	theta = arrayfire::acos(&theta);
+	let mut phi = TWO_PI*arrayfire::randu::<Z>(generate_dims);
+	
+
+	
+
+	let x = r.clone()*arrayfire::sin(&theta)*arrayfire::cos(&phi);
+	let y = r.clone()*arrayfire::sin(&theta)*arrayfire::sin(&phi);
+	let z = r.clone()*arrayfire::cos(&theta);
+
+	drop(r);
+	drop(theta);
+	drop(phi);
+
+	let mut total_obj2 = arrayfire::join_many(1, vec![&x,&y,&z]);
+	drop(x);
+	drop(y);
+	drop(z);
+
 
 
 
@@ -251,28 +273,6 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 
 
 	
-
-	let mut r = arrayfire::randu::<Z>(generate_dims);
-	r = (sphere_rad_Z)*arrayfire::cbrt(&r).cast::<Z>();
-	let mut theta = TWO*(arrayfire::randu::<Z>(generate_dims)-ONEHALF);
-	theta = arrayfire::acos(&theta);
-	let mut phi = TWO_PI*arrayfire::randu::<Z>(generate_dims);
-	
-
-	
-
-	let x = r.clone()*arrayfire::sin(&theta)*arrayfire::cos(&phi);
-	let y = r.clone()*arrayfire::sin(&theta)*arrayfire::sin(&phi);
-	let z = r.clone()*arrayfire::cos(&theta);
-
-	drop(r);
-	drop(theta);
-	drop(phi);
-
-	let mut total_obj2 = arrayfire::join_many(1, vec![&x,&y,&z]);
-	drop(x);
-	drop(y);
-	drop(z);
 
 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
