@@ -133,6 +133,43 @@ pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint >(
 	{
 
 
+	let neuron_size: u64 = modeldata_int["neuron_size"].clone();
+	let input_size: u64 = modeldata_int["input_size"].clone();
+	let output_size: u64 = modeldata_int["output_size"].clone();
+	let proc_num: u64 = modeldata_int["proc_num"].clone();
+	let active_size: u64 = modeldata_int["active_size"].clone();
+	let space_dims: u64 = modeldata_int["space_dims"].clone();
+
+
+
+
+	let nratio: f64 = modeldata_float["nratio"].clone();
+	let neuron_std: f64 = modeldata_float["neuron_std"].clone();
+	let sphere_rad: f64 = modeldata_float["sphere_rad"].clone();
+	let neuron_rad: f64 = modeldata_float["neuron_rad"].clone();
+
+
+
+	let generate_dims = arrayfire::Dim4::new(&[2*active_size,1,1,1]);
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+	let pos_dims = arrayfire::Dim4::new(&[1,space_dims,1,1]);
+
+
+
+	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
+
+	let ONEHALF = arrayfire::constant::<f64>(ONEHALF_F64,single_dims).cast::<Z>();
+
+	let TWO_PI = arrayfire::constant::<f64>(TWO_F64*std::f64::consts::PI,single_dims).cast::<Z>();
+
+	let sphere_rad_Z = arrayfire::constant::<f64>(sphere_rad-neuron_rad,single_dims).cast::<Z>();
+
+
+	
+
+
+
+
 }
 
 
