@@ -74,7 +74,7 @@ fn test_sphere_cell_collision_minibatch() {
     println!("cell_pos {}", cell_pos.dims()[0]);
 
     assert_eq!(cell_pos.dims()[0], active_size*2);
-
+    assert_eq!(cell_pos.dims()[1], space_dims);
 
     let start = Instant::now();
 
