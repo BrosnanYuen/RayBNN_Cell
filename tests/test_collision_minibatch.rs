@@ -127,8 +127,10 @@ fn test_sphere_cell_collision_minibatch() {
     let mut magsq = arrayfire::pow(&total_obj,&TWO,false);
     let mut magsq = arrayfire::sum(&magsq,1);
 
-    let (m0,_) = arrayfire::max_all::<f32>(&magsq);
+    let (max0,_) = arrayfire::max_all::<f32>(&magsq);
 
-    println!("max {}", m0);
+    assert!(sphere_rad*sphere_rad > (max0 as f64));
+
+    println!("max {}", max0);
 
 }
