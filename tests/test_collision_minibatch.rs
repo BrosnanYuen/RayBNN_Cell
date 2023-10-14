@@ -40,6 +40,14 @@ fn test_sphere_cell_collision_minibatch() {
     let modeldata_float: HashMap<String, f64> = HashMap::new();
     let modeldata_int: HashMap<String, u64>  = HashMap::new();
 
+    modeldata_float.insert("neuron_rad".to_string(), neuron_rad.clone());
+    modeldata_float.insert("time_step".to_string(), time_step.clone());
+    modeldata_float.insert("nratio".to_string(), nratio.clone());
+    modeldata_float.insert("neuron_std".to_string(), neuron_std.clone());
+    modeldata_float.insert("sphere_rad".to_string(), sphere_rad.clone());
+
+
+
 
 
 
