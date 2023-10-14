@@ -126,7 +126,7 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 
 
 
-pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint >(
+pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >(
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>
 	) -> arrayfire::Array<Z>
@@ -265,7 +265,7 @@ pub fn sphere_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutT
 
 
 
-	
+	let mut total_obj2 = generate_uniform_sphere_posiiton(modeldata_float, modeldata_int);
 
 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
