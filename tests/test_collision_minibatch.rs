@@ -26,34 +26,18 @@ fn test_sphere_cell_collision_minibatch() {
 	let proc_num: u64 = 3;
 	let active_size: u64 = 500000;
 	let space_dims: u64 = 3;
-	let sim_steps: u64 = 1;
 	let mut batch_size: u64 = 105;
+
+
+
 	let neuron_rad = 0.1;
+    let time_step = 0.3;
+    let nratio =  0.5;
+    let neuron_std =  0.3;
+    let sphere_rad =  30.0;
 
-	let mut netdata: clusterdiffeq::neural::network_f32::network_metadata_type = clusterdiffeq::neural::network_f32::network_metadata_type {
-		neuron_size: neuron_size,
-	    input_size: input_size,
-		output_size: output_size,
-		proc_num: proc_num,
-		active_size: active_size,
-		space_dims: space_dims,
-		step_num: sim_steps,
-		batch_size: batch_size,
-		del_unused_neuron: true,
 
-		time_step: 0.3,
-		nratio: 0.5,
-		neuron_std: 0.3,
-		sphere_rad: 30.0,
-		neuron_rad: neuron_rad,
-		con_rad: 0.6,
-		init_prob: 0.5,
-		add_neuron_rate: 0.0,
-		del_neuron_rate: 0.0,
-		center_const: 0.005,
-		spring_const: 0.01,
-		repel_const: 0.01
-	};
+
 
 	let temp_dims = arrayfire::Dim4::new(&[4,1,1,1]);
 
@@ -61,23 +45,6 @@ fn test_sphere_cell_collision_minibatch() {
 	let mut neuron_pos = arrayfire::constant::<f32>(0.0,temp_dims);
 
 
-
-	
-	let mut H = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut A = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut B = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut C = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut D = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut E = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut neuron_idx = arrayfire::constant::<i32>(0,temp_dims);
-
-
-
-
-	let mut WValues = arrayfire::constant::<f32>(0.0,temp_dims);
-	let mut WRowIdxCOO = arrayfire::constant::<i32>(0,temp_dims);
-	let mut WRowIdxCSR = arrayfire::constant::<i32>(0,temp_dims);
-	let mut WColIdx = arrayfire::constant::<i32>(0,temp_dims);
 
 
     let start = Instant::now();
