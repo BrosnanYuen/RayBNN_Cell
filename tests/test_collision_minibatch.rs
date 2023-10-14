@@ -71,6 +71,9 @@ fn test_sphere_cell_collision_minibatch() {
     let mut cell_pos: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate_uniform_sphere_posiiton(&modeldata_float, &modeldata_int);
 
 
+
+
+
     let start = Instant::now();
 
     /*
@@ -88,7 +91,25 @@ fn test_sphere_cell_collision_minibatch() {
         &cell_pos
     );
 
+    let idx = arrayfire::locate(&idx);
+
+	cell_pos = arrayfire::lookup(&cell_pos, &idx, 0);
+
+
+    RayBNN_Cell::Hidden::Sphere::split_into_glia_neuron(
+        &modeldata_float,
+    
+        &cell_pos,
+    
+        &mut glia_pos,
+        &mut neuron_pos
+    );
+
 	let duration = start.elapsed();
+
+
+
+
 
     println!("Time elapsed in expensive_function() is: {:?}", duration);
 
