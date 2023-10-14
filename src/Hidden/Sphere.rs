@@ -197,6 +197,33 @@ pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint<UnaryOutType
 
 
 
+
+
+pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutType = Z, UnaryOutType = Z> >(
+    modeldata_float: &HashMap<String, f64>,
+    modeldata_int: &HashMap<String, u64>,
+
+
+	cell_pos: &mut arrayfire::Array<Z>)
+	{
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 Generates a sphere and detects cell collisions in minibatch. Where groups/minibatches of cells are checked
 
