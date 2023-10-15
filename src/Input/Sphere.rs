@@ -33,7 +33,7 @@ The 3D position of neurons on the surface of a 3D sphere
 
 */
 
-pub fn create_spaced_input_neuron_on_sphere (
+pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
 	sphere_rad: f64,
 	Nx: u64,
 	Ny: u64,
