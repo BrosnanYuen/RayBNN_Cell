@@ -15,7 +15,7 @@ const ONEHALF_F64: f64 = 0.5;
 
 const TARGET_DENSITY: f64 = 3500.0;
 
-
+const ONE_F64: f64 = 1.0;
 
 
 
@@ -44,6 +44,11 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
 	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
 
 	let ONEHALF = arrayfire::constant::<f64>(ONEHALF_F64,single_dims).cast::<Z>();
+
+	let ONE = arrayfire::constant::<f64>(ONE_F64,single_dims).cast::<Z>();
+
+
+
 
 
 
