@@ -82,16 +82,16 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint<UnaryOut
 
 
 
-	let mut x = sphere_rad_Z.clone()*arrayfire::sin(&theta)*arrayfire::cos(&phi);
-	let mut y = sphere_rad_Z.clone()*arrayfire::sin(&theta)*arrayfire::sin(&phi);
-	let mut z = sphere_rad_Z*arrayfire::cos(&theta);
+	let mut x = arrayfire::sin(&theta)*arrayfire::cos(&phi);
+	let mut y = arrayfire::sin(&theta)*arrayfire::sin(&phi);
+	let mut z = arrayfire::cos(&theta);
 
 	x = arrayfire::flat(&x);
 	y = arrayfire::flat(&y);
 	z = arrayfire::flat(&z);
 
 
-	arrayfire::join_many(1, vec![&x,&y,&z])
+	sphere_rad_Z*arrayfire::join_many(1, vec![&x,&y,&z])
 }
 
 
