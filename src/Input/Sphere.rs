@@ -56,7 +56,7 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
 	let gen_dims = arrayfire::Dim4::new(&[1,Nx,1,1]);
 	let rep_dims = arrayfire::Dim4::new(&[Ny,1,1,1]);
 
-	let mut theta = arrayfire::iota::<f64>(gen_dims,rep_dims)+one;
+	let mut theta = arrayfire::iota::<Z>(gen_dims,rep_dims)+ONE;
 	theta = theta/((Nx+1) as f64);
 
 	theta = TWO*(theta-ONEHALF);
@@ -66,7 +66,7 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
 	let gen_dims = arrayfire::Dim4::new(&[Ny,1,1,1]);
 	let rep_dims = arrayfire::Dim4::new(&[1,Nx,1,1]);
 
-	let mut phi = arrayfire::iota::<f64>(gen_dims,rep_dims)+one;
+	let mut phi = arrayfire::iota::<f64>(gen_dims,rep_dims)+ONE;
 	phi = phi/((Ny+1) as f64);
 
 	phi = phi*TWO*std::f64::consts::PI;
