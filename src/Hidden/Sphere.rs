@@ -33,9 +33,6 @@ pub fn get_inside_idx_cubeV2<Z: arrayfire::FloatingPoint>(
 
 
 
-	let mut pivot_gpu = arrayfire::Array::new(pivot, arrayfire::Dim4::new(&[pivot.len() as u64, 1, 1, 1]));
-	let mut pivot_gpu2 = pivot_gpu.clone() + cube_size;
-
 
 
 	//let mut negative_range = pivot_pos[0].clone();
