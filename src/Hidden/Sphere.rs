@@ -205,8 +205,7 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 
 
 
-	let active_size: u64 = modeldata_int["active_size"].clone();
-	let space_dims: u64 = modeldata_int["space_dims"].clone();
+	let space_dims: u64 = cell_pos.dims()[1];
 
 
 
@@ -218,7 +217,7 @@ pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutTy
 	
 
 	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
-	pivot_rad = (pivot_rad/((2*active_size) as f64)).cbrt();
+	pivot_rad = (pivot_rad/((cell_pos.dims()[0]) as f64)).cbrt();
 
 	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*NEURON_RAD_FACTOR);
 
