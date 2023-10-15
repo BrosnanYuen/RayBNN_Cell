@@ -33,7 +33,7 @@ The 3D position of neurons on the surface of a 3D sphere
 
 */
 
-pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
+pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
 	sphere_rad: f64,
 	Nx: u64,
 	Ny: u64,
@@ -68,8 +68,12 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint > (
 	let gen_dims = arrayfire::Dim4::new(&[Ny,1,1,1]);
 	let rep_dims = arrayfire::Dim4::new(&[1,Nx,1,1]);
 
+	let Ny_Z = arrayfire::constant::<u64>((Ny+1),single_dims).cast::<Z>();
+
+
+
 	let mut phi = arrayfire::iota::<Z>(gen_dims,rep_dims)+ONE;
-	phi = phi/((Ny+1) as f64);
+	phi = phi/Ny_Z;
 
 	phi = phi*TWO_PI;
 
