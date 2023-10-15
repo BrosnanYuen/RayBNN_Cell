@@ -34,6 +34,9 @@ fn test_math() {
         Ny,
     );
 
+    assert_eq!(input_pos.dims()[0],Nx*Ny);
+    assert_eq!(input_pos.dims()[1],3);
+
     let mut magsq = arrayfire::pow(&input_pos,&TWO,false);
     let mut magsq = arrayfire::sum(&magsq,1);
 
@@ -47,5 +50,7 @@ fn test_math() {
     println!("max {}", max0);
 
 
+
+    
 
 }
