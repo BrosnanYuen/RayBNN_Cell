@@ -1,9 +1,7 @@
 # RayBNN_Raytrace
 
-Ray tracing library using GPUs, CPUs, and FPGAs via CUDA, OpenCL, and oneAPI 
+Cell posiition generation library for RayBNN using GPUs, CPUs, and FPGAs via CUDA, OpenCL, and oneAPI 
 
-
-Raytraces intersections between rays, spheres, circles
 
 
 # Install Arrayfire
@@ -24,59 +22,32 @@ num = "0.4.1"
 num-traits = "0.2.16"
 half = { version = "2.3.1" , features = ["num-traits"] }
 RayBNN_DataLoader = "0.1.3"
-RayBNN_Sparse = "0.1.2"
-RayBNN_Raytrace = "0.1.4"
+RayBNN_Cell = "0.1.0"
 ```
 
 # List of Examples
 
 
-# Line Sphere Intersection
+# Generate Cells and Check them for Collisions
 ```
-RayBNN_Raytrace::Intersect::Sphere::line_sphere_intersect(
-    &start_line,
-    &dir_line,
 
-    &circle_center,
-    &circle_radius,
+//Generate Random Uniform Cells within a Sphere
+let mut cell_pos: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate_uniform_sphere_posiiton(&modeldata_float, &modeldata_int);
 
-    &mut intersect
+
+//Get indicies of non colliding cells
+let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
+    &modeldata_float, 
+    &modeldata_int, 
+    &cell_pos
 );
+
+let idx = arrayfire::locate(&idx);
+
+//Select non colliding cells
+cell_pos = arrayfire::lookup(&cell_pos, &idx, 0);
+
 ```
-
-# Line Sphere Intersection Batch
-```
-RayBNN_Raytrace::Intersect::Sphere::line_sphere_intersect_batch(
-    3,
-    &start_line,
-    &dir_line,
-
-    &circle_center,
-    &circle_radius,
-
-    &mut intersect
-);
-```
-
-
-# Line Sphere Intersection Batch V2
-```
-RayBNN_Raytrace::Intersect::Sphere::line_sphere_intersect_batchV2(
-    3,
-
-    1,
-
-    &circle_center,
-    &circle_radius,
-
-    &mut start_line,
-    &mut dir_line,
-
-    &mut input_idx,
-    &mut hidden_idx,
-);
-```
-
 
 
 
