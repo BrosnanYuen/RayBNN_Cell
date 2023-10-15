@@ -88,6 +88,30 @@ fn test_sphere_cell_collision_minibatch() {
 
 	cell_pos = arrayfire::lookup(&cell_pos, &idx, 0);
 
+    println!("cell_pos {}", cell_pos.dims()[0]);
+
+    let mut cell_pos2: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate_uniform_sphere_posiiton(&modeldata_float, &modeldata_int);
+
+    let newsize = cell_pos2.dims()[0];
+
+    cell_pos2 = arrayfire::join(0, &cell_pos2, &cell_pos);
+
+    let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
+        &modeldata_float, 
+        &modeldata_int, 
+        &cell_pos2
+    );
+    let idx = arrayfire::rows(&idx, 0, (newsize-1) as i64);
+
+    let idx = arrayfire::locate(&idx);
+
+	cell_pos2 = arrayfire::lookup(&cell_pos2, &idx, 0);
+
+    cell_pos = arrayfire::join(0, &cell_pos2, &cell_pos);
+
+    println!("cell_pos {}", cell_pos.dims()[0]);
+
+
 
     RayBNN_Cell::Hidden::Sphere::split_into_glia_neuron(
         &modeldata_float,
