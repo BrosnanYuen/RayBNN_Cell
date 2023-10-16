@@ -114,11 +114,11 @@ The 3D position of neurons on the surface of a 3D sphere
 
 */
 
-pub fn create_spaced_input_neuron_on_sphere_1D (
+pub fn create_spaced_input_neuron_on_sphere_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
 	sphere_rad: f64,
 	input_size: u64,
 
-	) -> arrayfire::Array<f64>
+	) -> arrayfire::Array<Z>
 	{
 
 	let sqrt_input = (input_size as f64).sqrt().ceil() as u64 ;
