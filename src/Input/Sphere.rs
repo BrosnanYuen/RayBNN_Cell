@@ -98,3 +98,60 @@ pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint<UnaryOut
 
 
 
+
+
+/*
+Creates input neurons on the surface of a sphere for 1D data with random neuron position assignment
+
+
+Inputs
+sphere_rad:   3D Sphere Radius
+input_size:   Number of input neurons
+
+
+Outputs:
+The 3D position of neurons on the surface of a 3D sphere
+
+*/
+
+pub fn create_spaced_input_neuron_on_sphere_1D (
+	sphere_rad: f64,
+	input_size: u64,
+
+	) -> arrayfire::Array<f64>
+	{
+
+	let sqrt_input = (input_size as f64).sqrt().ceil() as u64 ;
+
+	let mut input_neurons = create_spaced_input_neuron_on_sphere(
+		sphere_rad,
+		sqrt_input,
+		sqrt_input,
+	);
+
+	let space_dims = input_neurons.dims()[1];
+
+
+	let randarr_dims = arrayfire::Dim4::new(&[sqrt_input*sqrt_input,1,1,1]);
+	let randarr = arrayfire::randu::<f64>(randarr_dims);
+	let (_, randidx) = arrayfire::sort_index(&randarr, 0, false);
+
+	let mut idxrs1 = arrayfire::Indexer::default();
+	let seq1 = arrayfire::Seq::new(0.0, (space_dims-1) as f64, 1.0);
+	idxrs1.set_index(&randidx, 0, None);
+	idxrs1.set_index(&seq1, 1, Some(false));
+	input_neurons = arrayfire::index_gen(&input_neurons, idxrs1);
+
+
+
+	if input_neurons.dims()[0] > input_size
+	{
+		input_neurons = arrayfire::rows(&input_neurons, 0, (input_size-1)  as i64);
+	}
+
+
+
+	input_neurons
+}
+
+
