@@ -382,14 +382,6 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 	
 
-	let mut pivot_rad = ((4.0/3.0)*std::f64::consts::PI*TARGET_DENSITY*sphere_rad*sphere_rad*sphere_rad);
-	pivot_rad = (pivot_rad/((cell_pos.dims()[0]) as f64)).cbrt();
-
-	let pivot_rad2 = pivot_rad + (2.05f64*neuron_rad*NEURON_RAD_FACTOR);
-
-	let mut loop_end_flag = false;
-	let mut pivot_pos = vec![-sphere_rad; space_dims as usize];
-
 
 
 
@@ -397,11 +389,6 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
 
 
-	let idx = get_inside_idx_cubeV2(
-		&cell_pos
-		, pivot_rad2
-		, &pivot_pos
-	);
 
 	
 	if idx.dims()[0] > 1
