@@ -134,18 +134,6 @@ pub fn create_spaced_input_neuron_on_sphere_1D<Z: arrayfire::FloatingPoint<Unary
 	let space_dims = input_neurons.dims()[1];
 
 
-	let randarr_dims = arrayfire::Dim4::new(&[sqrt_input*sqrt_input,1,1,1]);
-	let randarr = arrayfire::randu::<half::f16>(randarr_dims);
-	let (_, randidx) = arrayfire::sort_index(&randarr, 0, false);
-
-	let mut idxrs1 = arrayfire::Indexer::default();
-	let seq1 = arrayfire::Seq::new(0.0, (space_dims-1) as f64, 1.0);
-	idxrs1.set_index(&randidx, 0, None);
-	idxrs1.set_index(&seq1, 1, Some(false));
-	input_neurons = arrayfire::index_gen(&input_neurons, idxrs1);
-
-
-
 	if input_neurons.dims()[0] > input_size
 	{
 		input_neurons = arrayfire::rows(&input_neurons, 0, (input_size-1)  as i64);
