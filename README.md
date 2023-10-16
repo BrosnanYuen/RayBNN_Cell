@@ -1,4 +1,4 @@
-# RayBNN_Raytrace
+# RayBNN_Cell
 
 Cell posiition generation library for RayBNN using GPUs, CPUs, and FPGAs via CUDA, OpenCL, and oneAPI 
 
