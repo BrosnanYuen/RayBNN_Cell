@@ -456,7 +456,40 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 
 
 
+	let mut tempz = arrayfire::constant::<f64>(1000000.0,arrayfire::Dim4::new(&[1,3,1,1]));
+
+
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+
 	
+
+	let neuron_sq = 4.0*neuron_rad*neuron_rad;
+
+	for i in 0u64..total_obj2.dims()[0]
+	{
+		let select_pos = arrayfire::row(&total_obj2,i as i64);
+
+		let mut dist = arrayfire::sub(&select_pos,&total_obj2, true);
+		let mut magsq = arrayfire::pow(&dist,&two,false);
+		let mut magsq = arrayfire::sum(&magsq,1);
+
+
+		let insert = arrayfire::constant::<f64>(1000000.0,single_dims);
+
+		arrayfire::set_row(&mut magsq, &insert, i as i64);
+
+		let (m0,_) = arrayfire::min_all::<f64>(&magsq);
+
+		//println!("{} dist {}",i, m0);
+		//assert!(m0 > neuron_sq);
+
+		if m0 > neuron_sq
+		{
+			tempz = arrayfire::join(0, &tempz, &select_pos);
+		}
+	}
+
+
 
 	
 
