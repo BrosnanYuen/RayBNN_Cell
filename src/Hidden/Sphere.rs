@@ -371,12 +371,8 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 
 
-	let space_dims: u64 = cell_pos.dims()[1];
 
 
-
-
-	let sphere_rad: f64 = modeldata_float["sphere_rad"].clone();
 	let neuron_rad: f64 = modeldata_float["neuron_rad"].clone();
 
 
@@ -399,7 +395,6 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 	if neg_idx.dims()[0] > 0
 	{
-		//neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
 
 		let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
 
