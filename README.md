@@ -48,8 +48,27 @@ cell_pos = arrayfire::lookup(&cell_pos, &idx, 0);
 
 ```
 
+# Types of cell collision checkers
+```
+//Checks One by one
+let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_serial(
+    &modeldata_float, 
+    &cell_pos
+);
 
+//Checks All cells at once
+let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_batch(
+    &modeldata_float, 
+    &cell_pos
+);
 
+//Checks in minibatches
+let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
+    &modeldata_float, 
+    &cell_pos
+);
+
+```
 
 
 # Generate Input Neuron Positions
