@@ -1,5 +1,7 @@
 use arrayfire;
 
+use half;
+
 use std::collections::HashMap;
 
 
@@ -133,7 +135,7 @@ pub fn create_spaced_input_neuron_on_sphere_1D<Z: arrayfire::FloatingPoint<Unary
 
 
 	let randarr_dims = arrayfire::Dim4::new(&[sqrt_input*sqrt_input,1,1,1]);
-	let randarr = arrayfire::randu::<f64>(randarr_dims);
+	let randarr = arrayfire::randu::<half::f16>(randarr_dims);
 	let (_, randidx) = arrayfire::sort_index(&randarr, 0, false);
 
 	let mut idxrs1 = arrayfire::Indexer::default();
