@@ -154,7 +154,7 @@ pub fn create_spaced_neurons_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > 
 
 
 
-pub fn golden_spiral<Z: arrayfire::FloatingPoint > (
+pub fn golden_spiral<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >  (
 	sphere_rad: f64,
 	add_num: u64
 	) -> arrayfire::Array<Z>
@@ -174,14 +174,14 @@ pub fn golden_spiral<Z: arrayfire::FloatingPoint > (
 	let N_dims = arrayfire::Dim4::new(&[add_num,1,1,1]);
 	let repeat_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 
-	let mut idx = arrayfire::iota::<f64>(N_dims,repeat_dims);
+	let mut idx = arrayfire::iota::<Z>(N_dims,repeat_dims);
 	idx = idx + ONEHALF;
 
 
 
 
-	let mut phi = (two*idx.clone())/(add_num as f64);
-	phi = one - phi;
+	let mut phi = (TWO*idx.clone())/(add_num as f64);
+	phi = ONE - phi;
 	phi = arrayfire::acos::<f64>(&phi);
 
 
