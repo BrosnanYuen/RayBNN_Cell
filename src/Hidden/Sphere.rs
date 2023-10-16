@@ -206,7 +206,7 @@ Indicies of non colliding cells
 
 pub fn check_cell_collision_minibatch<Z: arrayfire::FloatingPoint<AggregateOutType = Z, UnaryOutType = Z> >(
     modeldata_float: &HashMap<String, f64>,
-    modeldata_int: &HashMap<String, u64>,
+
 
 	cell_pos: &arrayfire::Array<Z>) -> arrayfire::Array<bool>
 	{

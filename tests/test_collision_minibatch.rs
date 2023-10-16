@@ -80,7 +80,6 @@ fn test_sphere_cell_collision_minibatch() {
 
     let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
         &modeldata_float, 
-        &modeldata_int, 
         &cell_pos
     );
 
