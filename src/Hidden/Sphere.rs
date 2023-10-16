@@ -480,8 +480,6 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 
 		let (m0,_) = arrayfire::min_all::<f32>(&magsq);
 
-		//println!("{} dist {}",i, m0);
-		//assert!(m0 > neuron_sq);
 
 		if m0 < neuron_sq
 		{
