@@ -13,7 +13,7 @@ use rayon::prelude::*;
 const TWO_F64: f64 = 2.0;
 
 #[test]
-fn test_math() {
+fn test_input() {
     arrayfire::set_backend(BACK_END);
     arrayfire::set_device(DEVICE);
 
