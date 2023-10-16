@@ -391,17 +391,15 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 
 
-	let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
-
 	let mut neg_idx = select_non_overlap(
-		&tmp_obj,
+		&cell_pos,
 		neuron_rad
 	);
 
 
 	if neg_idx.dims()[0] > 0
 	{
-		neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
+		//neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
 
 		let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
 
