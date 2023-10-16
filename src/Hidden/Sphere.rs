@@ -194,7 +194,7 @@ pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint<UnaryOutType
 
 
 /*
-Generates a sphere and detects cell collisions in minibatch. Where groups/minibatches of cells are checked
+Detects cell collisions in minibatch, where groups/minibatches of cells are checked
 
 Inputs
 modeldata_float:  The sphere radius, neuron radius, mumber of neurons and glial cells to be created
@@ -352,7 +352,7 @@ pub fn split_into_glia_neuron<Z: arrayfire::FloatingPoint >(
 
 
 /*
-Generates a sphere and detects cell collisions in batch. Where a batch of cells are checked
+Detects cell collisions in batch, where all cells are checked at once
 
 Inputs
 modeldata_float:  The sphere radius, neuron radius, mumber of neurons and glial cells to be created
