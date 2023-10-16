@@ -396,64 +396,41 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 	let select_idx_dims = arrayfire::Dim4::new(&[cell_pos.dims()[0],1,1,1]);
 	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
 
-	loop 
-	{
 
-		let idx = get_inside_idx_cubeV2(
-			&cell_pos
-			, pivot_rad2
-			, &pivot_pos
+	let idx = get_inside_idx_cubeV2(
+		&cell_pos
+		, pivot_rad2
+		, &pivot_pos
+	);
+
+	
+	if idx.dims()[0] > 1
+	{
+		let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
+
+		let mut neg_idx = select_non_overlap(
+			&tmp_obj,
+			neuron_rad
 		);
 
+
+		if neg_idx.dims()[0] > 0
+		{
+			neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
+
+			let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
+
+			let mut idxrs = arrayfire::Indexer::default();
+			idxrs.set_index(&neg_idx, 0, None);
+			arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
+		}
+
 		
-		if idx.dims()[0] > 1
-		{
-			let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
-
-			let mut neg_idx = select_non_overlap(
-				&tmp_obj,
-				neuron_rad
-			);
-	
-
-			if neg_idx.dims()[0] > 0
-			{
-				neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
-
-				let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
-
-				let mut idxrs = arrayfire::Indexer::default();
-				idxrs.set_index(&neg_idx, 0, None);
-				arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
-			}
-
-			
-		}
-		drop(idx);
-
-
-		pivot_pos[0] = pivot_pos[0] + pivot_rad;
-
-		for idx in 0..space_dims
-		{
-			if pivot_pos[idx as usize] > sphere_rad
-			{
-				if idx == (space_dims-1)
-				{
-					loop_end_flag = true;
-					break;
-				}
-
-				pivot_pos[idx as usize] = -sphere_rad;
-				pivot_pos[(idx+1) as usize] = pivot_pos[(idx+1) as usize] + pivot_rad;
-			}
-		}
-
-		if loop_end_flag
-		{
-			break;
-		}
 	}
+	drop(idx);
+
+
+	
 	
 
 	select_idx
