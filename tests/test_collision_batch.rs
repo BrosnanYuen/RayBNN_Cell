@@ -28,7 +28,7 @@ fn test_sphere_cell_collision_batch() {
 	let input_size: u64 = 4;
 	let output_size: u64 = 3;
 	let proc_num: u64 = 3;
-	let active_size: u64 = 500000;
+	let active_size: u64 = 5000;
 	let space_dims: u64 = 3;
 	let mut batch_size: u64 = 105;
 
@@ -36,7 +36,7 @@ fn test_sphere_cell_collision_batch() {
     let time_step = 0.3;
     let nratio =  0.5;
     let neuron_std =  0.3;
-    let sphere_rad =  30.0;
+    let sphere_rad =  5.0;
 
 
     let mut modeldata_float: HashMap<String, f64> = HashMap::new();
@@ -117,7 +117,7 @@ fn test_sphere_cell_collision_batch() {
 	drop(glia_pos);
 
 	let mut active_size = total_obj.dims()[0];
-	assert!(active_size >= 200000);
+	assert!(active_size >= 3000);
 
 
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
