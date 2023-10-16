@@ -390,35 +390,28 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 
 
-	
-	if idx.dims()[0] > 1
+
+	let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
+
+	let mut neg_idx = select_non_overlap(
+		&tmp_obj,
+		neuron_rad
+	);
+
+
+	if neg_idx.dims()[0] > 0
 	{
-		let tmp_obj = arrayfire::lookup(&cell_pos, &idx, 0);
+		neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
 
-		let mut neg_idx = select_non_overlap(
-			&tmp_obj,
-			neuron_rad
-		);
+		let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
 
-
-		if neg_idx.dims()[0] > 0
-		{
-			neg_idx = arrayfire::lookup(&idx, &neg_idx, 0);
-
-			let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
-
-			let mut idxrs = arrayfire::Indexer::default();
-			idxrs.set_index(&neg_idx, 0, None);
-			arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
-		}
-
-		
+		let mut idxrs = arrayfire::Indexer::default();
+		idxrs.set_index(&neg_idx, 0, None);
+		arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
 	}
-	drop(idx);
-
 
 	
-	
+
 
 	select_idx
 }
