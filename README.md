@@ -22,7 +22,7 @@ num = "0.4.1"
 num-traits = "0.2.16"
 half = { version = "2.3.1" , features = ["num-traits"] }
 RayBNN_DataLoader = "0.1.3"
-RayBNN_Cell = "0.1.1"
+RayBNN_Cell = "0.1.2"
 ```
 
 # List of Examples
@@ -38,7 +38,6 @@ let mut cell_pos: arrayfire::Array<f32>  = RayBNN_Cell::Hidden::Sphere::generate
 //Get indicies of non colliding cells
 let idx = RayBNN_Cell::Hidden::Sphere::check_cell_collision_minibatch(
     &modeldata_float, 
-    &modeldata_int, 
     &cell_pos
 );
 
