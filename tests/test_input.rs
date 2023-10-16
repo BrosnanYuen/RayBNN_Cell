@@ -51,6 +51,27 @@ fn test_math() {
 
 
 
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+
+	for i in 0u64..input_pos.dims()[0]
+	{
+		let select_pos = arrayfire::row(&input_pos,i as i64);
+
+		let mut dist = arrayfire::sub(&select_pos,&input_pos, true);
+		let mut magsq = arrayfire::pow(&dist,&TWO,false);
+		let mut magsq = arrayfire::sum(&magsq,1);
+
+
+		let insert = arrayfire::constant::<f64>(1000000.0,single_dims);
+
+		arrayfire::set_row(&mut magsq, &insert, i as i64);
+
+		let (m0,_) = arrayfire::min_all::<f64>(&magsq);
+
+		//println!("{} dist {}",i, m0);
+		assert!((m0 as f64) > 5.0);
+	}
+
 
 
 }
