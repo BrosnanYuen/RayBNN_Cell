@@ -464,7 +464,7 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
 
 
-	let neuron_sq = 4.0*neuron_rad*neuron_rad;
+	let neuron_sq = (4.0*neuron_rad*neuron_rad) as f32;
 
 	for i in 0u64..cell_pos.dims()[0]
 	{
@@ -475,11 +475,12 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 		let mut magsq = arrayfire::sum(&magsq,1);
 
 
-		let insert = arrayfire::constant::<f64>(1000000.0,single_dims).cast::<Z>();
+		let mut magsq = magsq.cast::<f32>();
+		let insert = arrayfire::constant::<f32>(1000000.0,single_dims);
 
 		arrayfire::set_row(&mut magsq, &insert, i as i64);
 
-		let (m0,_) = arrayfire::min_all::<f64>(&magsq);
+		let (m0,_) = arrayfire::min_all::<f32>(&magsq);
 
 		//println!("{} dist {}",i, m0);
 		//assert!(m0 > neuron_sq);
