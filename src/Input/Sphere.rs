@@ -35,7 +35,7 @@ The 3D position of neurons on the surface of a 3D sphere
 
 */
 
-pub fn create_spaced_input_neuron_on_sphere<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
+pub fn create_spaced_neurons_2D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
 	sphere_rad: f64,
 	Nx: u64,
 	Ny: u64,
@@ -116,7 +116,7 @@ The 3D position of neurons on the surface of a 3D sphere
 
 */
 
-pub fn create_spaced_input_neuron_on_sphere_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
+pub fn create_spaced_neurons_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > (
 	sphere_rad: f64,
 	input_size: u64,
 
@@ -125,7 +125,7 @@ pub fn create_spaced_input_neuron_on_sphere_1D<Z: arrayfire::FloatingPoint<Unary
 
 	let sqrt_input = (input_size as f64).sqrt().ceil() as u64 ;
 
-	let mut input_neurons = create_spaced_input_neuron_on_sphere(
+	let mut input_neurons = create_spaced_neurons_2D(
 		sphere_rad,
 		sqrt_input,
 		sqrt_input,

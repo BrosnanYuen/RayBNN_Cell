@@ -28,7 +28,7 @@ fn test_math() {
     let Nx = 11;
     let Ny = 7;
 
-    let input_pos: arrayfire::Array<f64> = RayBNN_Cell::Input::Sphere::create_spaced_input_neuron_on_sphere(
+    let input_pos: arrayfire::Array<f64> = RayBNN_Cell::Input::Sphere::create_spaced_neurons_2D(
         sphere_rad,
         Nx,
         Ny,
@@ -51,6 +51,6 @@ fn test_math() {
 
 
 
-    
+
 
 }
