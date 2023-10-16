@@ -131,8 +131,6 @@ pub fn create_spaced_neurons_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > 
 		sqrt_input,
 	);
 
-	let space_dims = input_neurons.dims()[1];
-
 
 	if input_neurons.dims()[0] > input_size
 	{
