@@ -465,11 +465,11 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 
 	let neuron_sq = 4.0*neuron_rad*neuron_rad;
 
-	for i in 0u64..total_obj2.dims()[0]
+	for i in 0u64..cell_pos.dims()[0]
 	{
-		let select_pos = arrayfire::row(&total_obj2,i as i64);
+		let select_pos = arrayfire::row(&cell_pos,i as i64);
 
-		let mut dist = arrayfire::sub(&select_pos,&total_obj2, true);
+		let mut dist = arrayfire::sub(&select_pos,&cell_pos, true);
 		let mut magsq = arrayfire::pow(&dist,&two,false);
 		let mut magsq = arrayfire::sum(&magsq,1);
 
