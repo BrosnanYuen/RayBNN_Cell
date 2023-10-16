@@ -192,30 +192,15 @@ pub fn golden_spiral<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >  (
 
 
 
-
-	let costheta = arrayfire::cos(&theta);
-	let sinphi = arrayfire::sin::<f64>(&phi);
-
-	let x = sphere_rad*arrayfire::mul(&costheta,&sinphi,false);
+	let sphere_rad_Z = arrayfire::constant::<f64>(sphere_rad,single_dims).cast::<Z>();
 
 
+	let mut x = arrayfire::sin(&theta)*arrayfire::cos(&phi);
+	let mut y = arrayfire::sin(&theta)*arrayfire::sin(&phi);
+	let mut z = arrayfire::cos(&theta);
 
 
-	let sintheta =  arrayfire::sin(&theta);
-
-	let y =   sphere_rad*arrayfire::mul(&sintheta , &sinphi,false );
-
-
-
-	let z = sphere_rad*arrayfire::cos(&phi);
-
-
-
-	let new_pos = arrayfire::join(1, &x, &y);
-	
-	
-	
-	arrayfire::join(1, &new_pos, &z)
+	sphere_rad_Z*arrayfire::join_many(1, vec![&x,&y,&z])
 }
 
 
