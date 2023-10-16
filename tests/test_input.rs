@@ -48,7 +48,7 @@ fn test_math() {
 
     assert_eq!(max0, min0);
     println!("max {}", max0);
-
+    assert_eq!(max0, sphere_rad*sphere_rad);
 
 
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
