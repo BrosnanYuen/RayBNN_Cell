@@ -51,3 +51,16 @@ cell_pos = arrayfire::lookup(&cell_pos, &idx, 0);
 
 
 
+
+
+# Generate Input Neuron Positions
+
+```
+let input_neurons: arrayfire::Array<f64> = RayBNN_Cell::Input::Sphere::create_spaced_neurons_1D(
+    sphere_rad,
+    input_size,
+);
+```
+
+
+
