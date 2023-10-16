@@ -456,8 +456,6 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 
 
 
-	let mut tempz = arrayfire::constant::<f64>(1000000.0,arrayfire::Dim4::new(&[1,3,1,1]));
-
 
 	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
 
@@ -485,9 +483,9 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 		//println!("{} dist {}",i, m0);
 		//assert!(m0 > neuron_sq);
 
-		if m0 > neuron_sq
+		if m0 < neuron_sq
 		{
-			tempz = arrayfire::join(0, &tempz, &select_pos);
+			select_idx[i as usize] = false;
 		}
 	}
 
