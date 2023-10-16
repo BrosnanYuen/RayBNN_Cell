@@ -186,7 +186,7 @@ pub fn golden_spiral<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >  (
 	phi = arrayfire::acos(&phi);
 
 
-	let magic: f64 = 10.166407384630519631619018026484397683663678586442308240964665618;
+	let magic = arrayfire::constant(10.166407384630519631619018026484397683663678586442308240964665618,single_dims).cast::<Z>();
 
 	let theta = magic* idx;
 
