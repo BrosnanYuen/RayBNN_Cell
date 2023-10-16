@@ -451,32 +451,17 @@ pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType 
 	
 
 
-
-
-	let select_idx_dims = arrayfire::Dim4::new(&[cell_pos.dims()[0],1,1,1]);
-	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
+	let mut select_idx = vec![true; cell_pos.dims()[0] as usize];
 
 
 
-
-	let mut neg_idx = select_non_overlap(
-		&cell_pos,
-		neuron_rad
-	);
-
-
-	if neg_idx.dims()[0] > 0
-	{
-
-		let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
-
-		let mut idxrs = arrayfire::Indexer::default();
-		idxrs.set_index(&neg_idx, 0, None);
-		arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
-	}
 
 	
 
+	
+
+
+	let select_idx = arrayfire::Array::new(&select_idx, arrayfire::Dim4::new(&[cell_pos.dims()[0]  , 1, 1, 1]));
 
 	select_idx
 }
