@@ -422,3 +422,65 @@ pub fn check_cell_collision_batch<Z: arrayfire::FloatingPoint<AggregateOutType =
 
 
 
+
+/*
+Detects cell collisions in serial, where cells are checked one by one
+
+Inputs
+modeldata_float:  The sphere radius, neuron radius, mumber of neurons and glial cells to be created
+cell_pos:  The 3D position of neurons in the shape of a 3D sphere
+
+Outputs
+Indicies of non colliding cells
+*/
+
+pub fn check_cell_collision_serial<Z: arrayfire::FloatingPoint<AggregateOutType = Z, UnaryOutType = Z> >(
+    modeldata_float: &HashMap<String, f64>,
+
+
+	cell_pos: &arrayfire::Array<Z>) -> arrayfire::Array<bool>
+	{
+
+
+
+
+
+	let neuron_rad: f64 = modeldata_float["neuron_rad"].clone();
+
+
+	
+
+
+
+
+	let select_idx_dims = arrayfire::Dim4::new(&[cell_pos.dims()[0],1,1,1]);
+	let mut select_idx = arrayfire::constant::<bool>(true,select_idx_dims);
+
+
+
+
+	let mut neg_idx = select_non_overlap(
+		&cell_pos,
+		neuron_rad
+	);
+
+
+	if neg_idx.dims()[0] > 0
+	{
+
+		let insert = arrayfire::constant::<bool>(false,neg_idx.dims());
+
+		let mut idxrs = arrayfire::Indexer::default();
+		idxrs.set_index(&neg_idx, 0, None);
+		arrayfire::assign_gen(&mut select_idx, &idxrs, &insert);
+	}
+
+	
+
+
+	select_idx
+}
+
+
+
+
