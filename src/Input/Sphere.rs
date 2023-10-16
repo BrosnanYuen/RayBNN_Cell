@@ -154,12 +154,20 @@ pub fn create_spaced_neurons_1D<Z: arrayfire::FloatingPoint<UnaryOutType = Z> > 
 
 
 
-pub fn golden_spiral (
+pub fn golden_spiral<Z: arrayfire::FloatingPoint > (
 	new_sphere_rad: f64,
 	add_num: u64
-	) -> arrayfire::Array<f64>
+	) -> arrayfire::Array<Z>
 	{
+	let single_dims = arrayfire::Dim4::new(&[1,1,1,1]);
+	let TWO = arrayfire::constant::<f64>(TWO_F64,single_dims).cast::<Z>();
 
+	let ONEHALF = arrayfire::constant::<f64>(ONEHALF_F64,single_dims).cast::<Z>();
+
+	let ONE = arrayfire::constant::<f64>(ONE_F64,single_dims).cast::<Z>();
+
+	let TWO_PI = arrayfire::constant::<f64>(TWO_F64*std::f64::consts::PI,single_dims).cast::<Z>();
+	
 
 
 
