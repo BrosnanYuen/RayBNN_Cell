@@ -1,6 +1,6 @@
 [package]
 name = "RayBNN_Cell"
-version = "2.0.1"
+version = "2.0.2"
 authors = ["Brosnan Yuen <brosnanyuen@gmail.com>"]
 edition = "2021"
 description = "Cell Position Generator for RayBNN"

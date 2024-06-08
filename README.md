@@ -22,7 +22,7 @@ num = "0.4.1"
 num-traits = "0.2.16"
 half = { version = "2.3.1" , features = ["num-traits"] }
 RayBNN_DataLoader = "2.0.2"
-RayBNN_Cell = "2.0.1"
+RayBNN_Cell = "2.0.2"
 ```
 
 # List of Examples
