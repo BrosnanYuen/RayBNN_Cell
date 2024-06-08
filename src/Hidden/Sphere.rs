@@ -129,7 +129,7 @@ pub fn select_non_overlap<Z: arrayfire::FloatingPoint<AggregateOutType = Z>  >(
 
 
 
-pub fn generate_uniform_sphere_posiiton<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >(
+pub fn generate_uniform_sphere_position<Z: arrayfire::FloatingPoint<UnaryOutType = Z> >(
     modeldata_float: &HashMap<String, f64>,
     modeldata_int: &HashMap<String, u64>
 	) -> arrayfire::Array<Z>
