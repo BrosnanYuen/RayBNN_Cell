@@ -1,6 +1,6 @@
 [package]
 name = "RayBNN_Cell"
-version = "2.0.2"
+version = "2.0.3"
 authors = ["Brosnan Yuen <brosnanyuen@gmail.com>"]
 edition = "2021"
 description = "Cell Position Generator for RayBNN"
@@ -20,7 +20,7 @@ num = "0.4.3"
 num-traits = "0.2.19"
 half = { version = "2.4.1" , features = ["num-traits"] }
 rand = "0.8.5"
-RayBNN_DataLoader = "2.0.2"
+RayBNN_DataLoader = "2.0.3"
 
 [dev-dependencies]
 arrayfire = { version = "3.8.1", package = "arrayfire_fork" }
@@ -29,7 +29,7 @@ num = "0.4.3"
 num-traits = "0.2.19"
 half = { version = "2.4.1" , features = ["num-traits"] }
 rand = "0.8.5"
-RayBNN_DataLoader = "2.0.2"
+RayBNN_DataLoader = "2.0.3"
 
 [build-dependencies]
 arrayfire = { version = "3.8.1", package = "arrayfire_fork" }
@@ -38,7 +38,7 @@ num = "0.4.3"
 num-traits = "0.2.19"
 half = { version = "2.4.1" , features = ["num-traits"] }
 rand = "0.8.5"
-RayBNN_DataLoader = "2.0.2"
+RayBNN_DataLoader = "2.0.3"
 
 [lib]
 name = "RayBNN_Cell"
